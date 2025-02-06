@@ -1,0 +1,9 @@
+digraph G {
+"map" -> "laser_frame"[label=" Broadcaster: Authority undetectable\nAverage rate: 199.834\nBuffer length: 10.003\nMost recent transform: 1732333669.303513\nOldest transform: 1732333659.300205\n"];
+"map" -> "odom"[label=" Broadcaster: Authority undetectable\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"odom" -> "base_footprint"[label=" Broadcaster: Authority undetectable\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1732333669.3072896"[ shape=plaintext ] ;
+}->"map";
+}
