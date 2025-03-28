@@ -38,9 +38,6 @@ def generate_launch_description():
 
     rviz_config_dir = os.path.join(get_package_share_directory('lucia_cartographer'),
                                    'rviz', 'lucia_cartographer.rviz')
-    
-    #current_dir = os.path.dirname(os.path.realpath(__file__))
-    #config_path = os.path.join(current_dir, 'cartographer_occupancy_grid_node.launch.py')
 
     return LaunchDescription([
         DeclareLaunchArgument(
