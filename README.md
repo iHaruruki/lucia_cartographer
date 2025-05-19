@@ -1,9 +1,6 @@
 # lucia_cartographer
 ### Node and Topic
-```mermaid
-flowchart LR
-    A(["/"]) ==> B["/"] ==> C(["/"])
-```
+![](rosgraph.png)
 ## Dependency
 ```shell
 $ sudo apt install ros-humble-cartographer
