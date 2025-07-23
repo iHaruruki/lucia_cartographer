@@ -15,14 +15,21 @@ $ colcon build --symlink-install
 $ source install/setup.bash
 ```
 ## Usage
+### Launch Lucia's motor and LiDAR
 ```shell
-$ ros2 run lucia_controller lucia_controller_node
-$ ros2 launch urg_node2 urg_node2.launch.py
-$ ros2 launch lucia_description robot.launch.py
-$ ros2 launch lucia_cartographer cartgrapher.launch.py
+ros2 launch lucia_controller bringup.launch.py
+```
+### Run Cartographer Node
+```shell
+ros2 launch lucia_cartographer cartgrapher.launch.py
+```
+### Run Teleportation Node
+```shell
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
 **When you move Lucia, the map will update.**
 ![](cartographer.gif)
+### Save map
 ```shell
 # Once the entire map is complete, save it
 $ ros2 run nav2_map_server map_saver_cli -f ~/map
