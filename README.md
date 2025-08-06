@@ -32,7 +32,7 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ### Save map
 ```shell
 # Once the entire map is complete, save it
-$ ros2 run nav2_map_server map_saver_cli -f ~/map
+ros2 run nav2_map_server map_saver_cli -f ~/map
 ```
 ## License
 ## Authors
