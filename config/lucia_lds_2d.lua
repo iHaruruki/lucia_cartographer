@@ -37,7 +37,7 @@ options = {
 
 MAP_BUILDER.use_trajectory_builder_2d = true
 MAP_BUILDER.use_trajectory_builder_3d = false
-MAP_BUILDER.num_background_threads = 4
+MAP_BUILDER.num_background_threads = 8
 
 -- ループ閉じ検出を強める
 POSE_GRAPH.optimize_every_n_nodes = 90
