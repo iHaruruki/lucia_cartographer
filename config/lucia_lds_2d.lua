@@ -18,7 +18,7 @@ options = {
   use_landmarks = false,
 
   -- LiDARが1台なら 1、2台運用時のみ 2 にする
-  num_laser_scans = 1,
+  num_laser_scans = 2,
   num_multi_echo_laser_scans = 0,
   num_subdivisions_per_laser_scan = 1,
   num_point_clouds = 0,
@@ -57,9 +57,9 @@ POSE_GRAPH.matcher_rotation_weight = 1.6e3
 
 -- 誤ループ抑制。強すぎるとループ効果が出ないので 1e2 程度から
 POSE_GRAPH.optimization_problem.local_slam_pose_translation_weight = 1e2
-POSE_GRAPH.optimization_problem.local_slam_pose_rotation_weight   = 1e2
-POSE_GRAPH.optimization_problem.odometry_translation_weight       = 1e2
-POSE_GRAPH.optimization_problem.odometry_rotation_weight          = 1e2
+POSE_GRAPH.optimization_problem.local_slam_pose_rotation_weight = 1e2
+POSE_GRAPH.optimization_problem.odometry_translation_weight = 1e2
+POSE_GRAPH.optimization_problem.odometry_rotation_weight = 1e2
 POSE_GRAPH.optimization_problem.huber_scale = 1e1
 
 TRAJECTORY_BUILDER_2D.use_imu_data = false
