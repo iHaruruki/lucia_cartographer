@@ -18,7 +18,7 @@ options = {
   use_landmarks = false,
 
   -- LiDAR が1台なら 1、2台なら 2（Remap 必須）
-  num_laser_scans = 1,
+  num_laser_scans = 2,
   num_multi_echo_laser_scans = 0,
   num_subdivisions_per_laser_scan = 1,
   num_point_clouds = 0,
