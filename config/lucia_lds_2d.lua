@@ -6,8 +6,8 @@ options = {
   trajectory_builder = TRAJECTORY_BUILDER,
 
   map_frame = "map",
-  tracking_frame = "base_link",
-  published_frame = "base_link",
+  tracking_frame = "base_footprint",
+  published_frame = "base_footprint",
   odom_frame = "odom",
 
   provide_odom_frame = false,
@@ -18,7 +18,7 @@ options = {
   use_landmarks = false,
 
   -- LiDAR が1台なら 1、2台なら 2（Remap 必須）
-  num_laser_scans = 2,
+  num_laser_scans = 1,
   num_multi_echo_laser_scans = 0,
   num_subdivisions_per_laser_scan = 1,
   num_point_clouds = 0,
