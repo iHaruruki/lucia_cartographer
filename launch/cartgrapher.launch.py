@@ -28,30 +28,39 @@ from launch.substitutions import ThisLaunchFileDir
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     lucia_cartographer_prefix = get_package_share_directory('lucia_cartographer')
-    cartographer_config_dir = LaunchConfiguration('cartographer_config_dir', default=os.path.join(
-                                                  lucia_cartographer_prefix, 'config'))
-    configuration_basename = LaunchConfiguration('configuration_basename',
-                                                 default='lucia_lds_2d.lua')
+    cartographer_config_dir = LaunchConfiguration(
+        'cartographer_config_dir',
+        default=os.path.join(lucia_cartographer_prefix, 'config')
+    )
+    configuration_basename = LaunchConfiguration(
+        'configuration_basename',
+        default='lucia_lds_2d.lua'
+    )
 
     resolution = LaunchConfiguration('resolution', default='0.05')
     publish_period_sec = LaunchConfiguration('publish_period_sec', default='1.0')
 
-    rviz_config_dir = os.path.join(get_package_share_directory('lucia_cartographer'),
-                                   'rviz', 'lucia_cartographer.rviz')
+    rviz_config_dir = os.path.join(
+        get_package_share_directory('lucia_cartographer'),
+        'rviz', 'lucia_cartographer.rviz'
+    )
 
     return LaunchDescription([
         DeclareLaunchArgument(
             'cartographer_config_dir',
             default_value=cartographer_config_dir,
-            description='Full path to config file to load'),
+            description='Full path to config file to load'
+        ),
         DeclareLaunchArgument(
             'configuration_basename',
             default_value=configuration_basename,
-            description='Name of lua file for cartographer'),
+            description='Name of lua file for cartographer'
+        ),
         DeclareLaunchArgument(
             'use_sim_time',
             default_value='false',
-            description='Use simulation (Gazebo) clock if true'),
+            description='Use simulation (Gazebo) clock if true'
+        ),
 
         Node(
             package='cartographer_ros',
@@ -59,23 +68,38 @@ def generate_launch_description():
             name='cartographer_node',
             output='screen',
             parameters=[{'use_sim_time': use_sim_time}],
-            arguments=['-configuration_directory', cartographer_config_dir,
-                       '-configuration_basename', configuration_basename]),
+            arguments=[
+                '-configuration_directory', cartographer_config_dir,
+                '-configuration_basename', configuration_basename
+            ],
+            remappings=[
+                # 2台LiDARを使用するためのリマップ
+                ('scan_1', '/laser1/scan'),
+                ('scan_2', '/laser2/scan'),
+                # 明示しておくと安心（そのままなら省略可）
+                ('odom', '/odom'),
+            ],
+        ),
 
         DeclareLaunchArgument(
             'resolution',
             default_value=resolution,
-            description='Resolution of a grid cell in the published occupancy grid'),
+            description='Resolution of a grid cell in the published occupancy grid'
+        ),
 
         DeclareLaunchArgument(
             'publish_period_sec',
             default_value=publish_period_sec,
-            description='OccupancyGrid publishing period'),
+            description='OccupancyGrid publishing period'
+        ),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([ThisLaunchFileDir(), '/occupancy_grid.launch.py']),
-            launch_arguments={'use_sim_time': use_sim_time, 'resolution': resolution,
-                              'publish_period_sec': publish_period_sec}.items(),
+            launch_arguments={
+                'use_sim_time': use_sim_time,
+                'resolution': resolution,
+                'publish_period_sec': publish_period_sec
+            }.items(),
         ),
 
         Node(
@@ -84,5 +108,6 @@ def generate_launch_description():
             name='rviz2',
             arguments=['-d', rviz_config_dir],
             parameters=[{'use_sim_time': use_sim_time}],
-            output='screen'),
+            output='screen'
+        ),
     ])
