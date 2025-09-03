@@ -76,7 +76,6 @@ def generate_launch_description():
                 # 2台LiDARを使用するためのリマップ
                 ('scan_1', '/laser1/scan'),
                 ('scan_2', '/laser2/scan'),
-                # 明示しておくと安心（そのままなら省略可）
                 ('odom', '/odom'),
             ],
         ),
