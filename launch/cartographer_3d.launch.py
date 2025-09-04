@@ -47,8 +47,8 @@ def generate_launch_description():
         DeclareLaunchArgument('map_topic', default_value='/Laser_map'),
         # Static TF defaults (edit to your actual frames)
         DeclareLaunchArgument('base_frame', default_value='base_link'),
-        DeclareLaunchArgument('imu_frame', default_value='unilidar_imu'),
-        DeclareLaunchArgument('lidar_frame', default_value='unilidar'),  # set to the actual frame_id of /unilidar/cloud
+        DeclareLaunchArgument('imu_frame', default_value='camera_init'),  # set to the actual frame_id of /unilidar/imu
+        DeclareLaunchArgument('lidar_frame', default_value='camera_init'),  # set to the actual frame_id of /unilidar/cloud
     ]
 
     cartographer_node = Node(
