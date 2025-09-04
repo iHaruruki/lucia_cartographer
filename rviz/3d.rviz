@@ -1,12 +1,31 @@
 Panels:
   - Class: rviz_common/Displays
     Name: Displays
+    Help Height: 78
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /TF1
+        - /LiDAR1
+        - /OccupancyGrid1
+        - /Trajectory1
+        - /Odometry1
+      Splitter Ratio: 0.5
+    Tree Height: 400
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
     Name: Tool Properties
+    Expanded:
+      - /2D Goal Pose1
+      - /2D Pose Estimate1
+    Splitter Ratio: 0.588
   - Class: rviz_common/Views
     Name: Views
+    Expanded:
+      - /Current View1
+    Splitter Ratio: 0.5
+
 Visualization Manager:
   Class: ""
   Enabled: true
@@ -14,141 +33,159 @@ Visualization Manager:
     Background Color: 48; 48; 48
     Fixed Frame: map
     Frame Rate: 30
-  Name: root
   Displays:
-    - Class: rviz_default_plugins/Grid
-      Name: Grid
-      Enabled: true
-      Alpha: 0.5
-      Plane: XY
-      Cell Size: 1
-      Plane Cell Count: 10
-      Line Style:
-        Value: Lines
-        Line Width: 0.03
     - Class: rviz_default_plugins/TF
       Name: TF
       Enabled: true
-      Frames:
-        All Enabled: true
+      Show Names: true
+      Frame Timeout: 15
+      Marker Scale: 1
       Show Arrows: true
       Show Axes: true
-      Show Names: true
-      Marker Scale: 1
+      Show Trail: false
+      Frames:
+        All Enabled: true
+        map:
+          Value: true
+        odom:
+          Value: true
+        base_link:
+          Value: true
+        unilidar_imu:
+          Value: true
+
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Cell Size: 1
+      Color: 160; 160; 160
+      Line Style:
+        Line Width: 0.03
+        Value: Lines
+      Normal Cell Count: 0
+      Plane: XY
+      Plane Cell Count: 50
+      Reference Frame: <Fixed Frame>
+
     - Class: rviz_default_plugins/PointCloud2
-      Name: LiDAR Raw
+      Name: LiDAR
       Enabled: true
-      Topic:
-        Value: /your_points_topic
-        History Policy: Keep Last
-        Depth: 5
-        Reliability Policy: Reliable
-        Durability Policy: Volatile
-      Color Transformer: FlatColor
-      Color: 0; 170; 255
-      Size (m): 0.03
+      Topic: /unilidar/cloud
+      Queue Size: 10
+      Color Transformer: Z
+      Autocompute Value Bounds: true
+      Min Value: 0
+      Max Value: 1
+      Size (Pixels): 2
       Style: Points
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Value: true
-      Position Transformer: XYZ
-      Axis: Z
-    - Class: rviz_common/Group
-      Name: Cartographer
-      Enabled: true
-      Displays:
-        - Class: rviz_default_plugins/PointCloud2
-          Name: scan_matched_points2
-          Enabled: true
-          Topic:
-            Value: /scan_matched_points2
-            History Policy: Keep Last
-            Depth: 5
-            Reliability Policy: Reliable
-            Durability Policy: Volatile
-          Color Transformer: FlatColor
-          Color: 0; 255; 0
-          Size (m): 0.02
-          Style: Points
-          Autocompute Intensity Bounds: true
-          Autocompute Value Bounds:
-            Value: true
-          Position Transformer: XYZ
-          Axis: Z
-        - Class: rviz_default_plugins/MarkerArray
-          Name: Trajectories
-          Enabled: true
-          Topic:
-            Value: /trajectory_node_list
-            History Policy: Keep Last
-            Depth: 5
-            Reliability Policy: Reliable
-            Durability Policy: Volatile
-        - Class: rviz_default_plugins/MarkerArray
-          Name: Constraints
-          Enabled: true
-          Topic:
-            Value: /constraint_list
-            History Policy: Keep Last
-            Depth: 5
-            Reliability Policy: Reliable
-            Durability Policy: Volatile
-    - Class: rviz_default_plugins/Odometry
-      Name: Odometry
-      Enabled: false
-      Topic:
-        Value: /odom
-        History Policy: Keep Last
-        Depth: 5
-        Reliability Policy: Reliable
-        Durability Policy: Volatile
-      Shape:
-        Value: Arrow
-        Axes Length: 1
-        Axes Radius: 0.1
-        Shaft Length: 1
-        Shaft Radius: 0.05
-        Head Length: 0.3
-        Head Radius: 0.1
+      Use Fixed Frame: true
+      Use rainbow: true
+      Decay Time: 0
+
     - Class: rviz_default_plugins/Map
-      Name: Map
-      Enabled: false
-      Topic:
-        Value: /map
-        History Policy: Keep Last
-        Depth: 5
-        Reliability Policy: Reliable
-        Durability Policy: Volatile
-      Update Topic:
-        Value: /map_updates
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Durability Policy: Volatile
+      Name: OccupancyGrid
+      Enabled: true
+      Topic: /Laser_map
       Alpha: 0.7
       Color Scheme: map
+      Draw Behind: false
+      Resolution: 0
+
+    - Class: rviz_default_plugins/Path
+      Name: Trajectory
+      Enabled: true
+      Topic: /path
+      Buffer Length: 1000
+      Color: 25; 255; 0
+      Line Style: Lines
+      Line Width: 0.05
+      Pose Style: None
+      Radius: 0.03
+
+    - Class: rviz_default_plugins/Odometry
+      Name: Odometry
+      Enabled: true
+      Topic: /Odometry
+      Color: 255; 25; 0
+      Shape: Arrow
+      Keep: 200
+      Shaft Length: 0.5
+      Shaft Radius: 0.03
+      Head Length: 0.1
+      Head Radius: 0.06
+      Position Tolerance: 0.0
+      Angle Tolerance: 0.0
+      Covariance:
+        Position:
+          Value: true
+          Scale: 1
+          Alpha: 0.5
+        Orientation:
+          Value: false
+          Scale: 1
+          Alpha: 0.5
+
+    - Class: rviz_default_plugins/PoseWithCovariance
+      Name: InitialPose
+      Enabled: true
+      Topic: /initialpose
+      Shape: Arrow
+      Color: 255; 255; 127
+      Alpha: 0.8
+      Arrow Length: 0.7
+
+    - Class: rviz_default_plugins/Pose
+      Name: Goal
+      Enabled: true
+      Topic: /goal_pose
+      Shape: Arrow
+      Color: 0; 170; 255
+      Alpha: 0.8
+      Length: 0.7
+
   Tools:
+    - Class: rviz_default_plugins/Interact
+      Hide Inactive Objects: true
     - Class: rviz_default_plugins/MoveCamera
     - Class: rviz_default_plugins/Select
     - Class: rviz_default_plugins/FocusCamera
     - Class: rviz_default_plugins/Measure
-    - Class: rviz_default_plugins/SetGoal
-      Topic:
-        Value: /move_base_simple/goal
-    - Class: rviz_default_plugins/PublishPoint
-      Topic:
-        Value: /clicked_point
     - Class: rviz_default_plugins/SetInitialPose
-      Topic:
-        Value: initialpose
+      Topic: /initialpose
+    - Class: rviz_default_plugins/SetGoal
+      Topic: /goal_pose
+
+  Transformation:
+    Current:
+      Relative: false
+
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Name: 3D View
-      Distance: 5
-      Pitch: 0.6
-      Yaw: 0.8
+      Name: Orbit
+      Distance: 20
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Pitch: 0.785
+      Yaw: 0.785
+      Target Frame: base_link
+    Saved: []
+
 Window Geometry:
-  Width: 1200
-  Height: 800
+  Displays:
+    collapsed: false
+  Height: 900
+  Hide Left Dock: false
+  Hide Right Dock: false
+  QMainWindow State: ""
+  Selection:
+    collapsed: true
+  Tool Properties:
+    collapsed: false
+  Views:
+    collapsed: false
+  Width: 1600
   X: 100
-  Y: 100
+  Y: 50
