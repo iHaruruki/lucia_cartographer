@@ -31,9 +31,9 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
     configuration_directory = LaunchConfiguration('configuration_directory')
     configuration_basename = LaunchConfiguration('configuration_basename')
-    points2_topic = LaunchConfiguration('unilidar/cloud')
-    imu_topic = LaunchConfiguration('unilidar/imu')
-    odom_topic = LaunchConfiguration('Odometry')
+    points2_topic = LaunchConfiguration('points2')   # FIXED
+    imu_topic = LaunchConfiguration('imu')           # FIXED
+    odom_topic = LaunchConfiguration('odom')         # FIXED
     use_rviz = LaunchConfiguration('use_rviz')
     rviz_config = LaunchConfiguration('rviz_config')
     occ_grid_resolution = LaunchConfiguration('occ_grid_resolution')
