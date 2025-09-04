@@ -1,8 +1,19 @@
 #!/usr/bin/env python3
+# Launch Cartographer 3D with overridable config and topics.
+#
+# Examples:
+#   ros2 launch lucia_cartographer cartographer_3d.launch.py \
+#     configuration_directory:=/home/robot/ros2_ws/src/lucia_cartographer/config \
+#     configuration_basename:=unilidar_3d.lua \
+#     points2:=/unilidar/cloud imu:=/unilidar/imu odom:=/Odometry
+#
+# To publish occupancy grid as /Laser_map (default here), remap if needed:
+#   ros2 launch lucia_cartographer cartographer_3d.launch.py map_topic:=/map
 
 import os
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
@@ -16,24 +27,24 @@ def generate_launch_description():
     default_config_basename = 'unilidar_3d.lua'
     default_rviz_config = os.path.join(pkg_share, 'rviz', 'cartographer_3d.rviz')
 
-    # Launch arguments
+    # Launch configurations
     use_sim_time = LaunchConfiguration('use_sim_time')
     configuration_directory = LaunchConfiguration('configuration_directory')
     configuration_basename = LaunchConfiguration('configuration_basename')
-    points2_topic = LaunchConfiguration('points2')
-    imu_topic = LaunchConfiguration('imu')
-    odom_topic = LaunchConfiguration('odom')
-    rviz_config = LaunchConfiguration('rviz_config')
+    points2_topic = LaunchConfiguration('unilidar/cloud')
+    imu_topic = LaunchConfiguration('unilidar/imu')
+    odom_topic = LaunchConfiguration('Odometry')
     use_rviz = LaunchConfiguration('use_rviz')
-    respawn = LaunchConfiguration('respawn')
+    rviz_config = LaunchConfiguration('rviz_config')
     occ_grid_resolution = LaunchConfiguration('occ_grid_resolution')
     occ_grid_publish_period = LaunchConfiguration('occ_grid_publish_period')
+    map_topic = LaunchConfiguration('map_topic')
 
     declare_args = [
         DeclareLaunchArgument(
             'use_sim_time',
             default_value='false',
-            description='Use /clock (sim time).'
+            description='Use /clock (simulation time).'
         ),
         DeclareLaunchArgument(
             'configuration_directory',
@@ -71,11 +82,6 @@ def generate_launch_description():
             description='RViz2 config file.'
         ),
         DeclareLaunchArgument(
-            'respawn',
-            default_value='false',
-            description='Respawn nodes on crash.'
-        ),
-        DeclareLaunchArgument(
             'occ_grid_resolution',
             default_value='0.05',
             description='Occupancy grid resolution in meters.'
@@ -85,6 +91,11 @@ def generate_launch_description():
             default_value='1.0',
             description='Occupancy grid publish period in seconds.'
         ),
+        DeclareLaunchArgument(
+            'map_topic',
+            default_value='/Laser_map',
+            description='OccupancyGrid output topic (remap from "map").'
+        ),
     ]
 
     cartographer_node = Node(
@@ -92,7 +103,6 @@ def generate_launch_description():
         executable='cartographer_node',
         name='cartographer_node',
         output='screen',
-        respawn=respawn,
         parameters=[{'use_sim_time': use_sim_time}],
         arguments=[
             '-configuration_directory', configuration_directory,
@@ -110,17 +120,18 @@ def generate_launch_description():
         executable='cartographer_occupancy_grid_node',
         name='cartographer_occupancy_grid_node',
         output='screen',
-        respawn=respawn,
         parameters=[{
             'use_sim_time': use_sim_time,
             'resolution': occ_grid_resolution,
             'publish_period_sec': occ_grid_publish_period,
         }],
+        remappings=[
+            ('map', map_topic),
+        ],
     )
 
-    # RViz is optional
     rviz_node = Node(
-        condition=None,  # Let RViz be controlled by use_rviz below
+        condition=IfCondition(use_rviz),
         package='rviz2',
         executable='rviz2',
         name='rviz2',
@@ -128,13 +139,4 @@ def generate_launch_description():
         arguments=['-d', rviz_config],
     )
 
-    # Conditional addition of RViz
-    # Launch API can’t directly toggle nodes by LC in a list, so we add it dynamically.
-    nodes = [cartographer_node, occupancy_grid_node]
-    # Emulate a simple conditional: if use_rviz == 'true', include RViz
-    # The Launch system resolves LaunchConfiguration at runtime; here we assume the
-    # default is true. If you need strict conditional behavior, split to two launch files
-    # or use OpaqueFunction to inspect the LaunchConfiguration.
-    # RViz will harmlessly start even if the config path doesn’t exist.
-
-    return LaunchDescription(declare_args + nodes + [rviz_node])
+    return LaunchDescription(declare_args + [cartographer_node, occupancy_grid_node, rviz_node])
