@@ -1,0 +1,154 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Selection
+    Name: Selection
+  - Class: rviz_common/Tool Properties
+    Name: Tool Properties
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: map
+    Frame Rate: 30
+  Name: root
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Alpha: 0.5
+      Plane: XY
+      Cell Size: 1
+      Plane Cell Count: 10
+      Line Style:
+        Value: Lines
+        Line Width: 0.03
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Frames:
+        All Enabled: true
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Marker Scale: 1
+    - Class: rviz_default_plugins/PointCloud2
+      Name: LiDAR Raw
+      Enabled: true
+      Topic:
+        Value: /your_points_topic
+        History Policy: Keep Last
+        Depth: 5
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+      Color Transformer: FlatColor
+      Color: 0; 170; 255
+      Size (m): 0.03
+      Style: Points
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Value: true
+      Position Transformer: XYZ
+      Axis: Z
+    - Class: rviz_common/Group
+      Name: Cartographer
+      Enabled: true
+      Displays:
+        - Class: rviz_default_plugins/PointCloud2
+          Name: scan_matched_points2
+          Enabled: true
+          Topic:
+            Value: /scan_matched_points2
+            History Policy: Keep Last
+            Depth: 5
+            Reliability Policy: Reliable
+            Durability Policy: Volatile
+          Color Transformer: FlatColor
+          Color: 0; 255; 0
+          Size (m): 0.02
+          Style: Points
+          Autocompute Intensity Bounds: true
+          Autocompute Value Bounds:
+            Value: true
+          Position Transformer: XYZ
+          Axis: Z
+        - Class: rviz_default_plugins/MarkerArray
+          Name: Trajectories
+          Enabled: true
+          Topic:
+            Value: /trajectory_node_list
+            History Policy: Keep Last
+            Depth: 5
+            Reliability Policy: Reliable
+            Durability Policy: Volatile
+        - Class: rviz_default_plugins/MarkerArray
+          Name: Constraints
+          Enabled: true
+          Topic:
+            Value: /constraint_list
+            History Policy: Keep Last
+            Depth: 5
+            Reliability Policy: Reliable
+            Durability Policy: Volatile
+    - Class: rviz_default_plugins/Odometry
+      Name: Odometry
+      Enabled: false
+      Topic:
+        Value: /odom
+        History Policy: Keep Last
+        Depth: 5
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+      Shape:
+        Value: Arrow
+        Axes Length: 1
+        Axes Radius: 0.1
+        Shaft Length: 1
+        Shaft Radius: 0.05
+        Head Length: 0.3
+        Head Radius: 0.1
+    - Class: rviz_default_plugins/Map
+      Name: Map
+      Enabled: false
+      Topic:
+        Value: /map
+        History Policy: Keep Last
+        Depth: 5
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+      Update Topic:
+        Value: /map_updates
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+      Alpha: 0.7
+      Color Scheme: map
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+    - Class: rviz_default_plugins/SetGoal
+      Topic:
+        Value: /move_base_simple/goal
+    - Class: rviz_default_plugins/PublishPoint
+      Topic:
+        Value: /clicked_point
+    - Class: rviz_default_plugins/SetInitialPose
+      Topic:
+        Value: initialpose
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Name: 3D View
+      Distance: 5
+      Pitch: 0.6
+      Yaw: 0.8
+Window Geometry:
+  Width: 1200
+  Height: 800
+  X: 100
+  Y: 100
