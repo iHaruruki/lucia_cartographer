@@ -11,12 +11,11 @@ options = {
 
   -- Frames
   map_frame = "map",
-  -- Set to the IMU frame_id from /unilidar/imu (e.g., "imu_link" or your IMU frame)
   tracking_frame = "unilidar_imu",
   published_frame = "base_link",
   odom_frame = "odom",
 
-  provide_odom_frame = false,               -- use external odom if available
+  provide_odom_frame = false,
   publish_frame_projected_to_2d = false,
 
   -- Sensors
@@ -68,7 +67,6 @@ POSE_GRAPH.optimization_problem.odometry_rotation_weight          = 1e2
 TRAJECTORY_BUILDER_3D.num_accumulated_range_data = 1
 TRAJECTORY_BUILDER_3D.voxel_filter_size = 0.15
 
--- Explicitly define adaptive voxel filters for compatibility
 TRAJECTORY_BUILDER_3D.high_resolution_adaptive_voxel_filter = {
   max_length = 2.0,
   min_num_points = 150,
@@ -85,13 +83,13 @@ TRAJECTORY_BUILDER_3D.loop_closure_adaptive_voxel_filter = {
   max_range = 30.0,
 }
 
-TRAJECTORY_BUILDER_3D.ceres_scan_matcher = {
-  translation_weight = 5.0,
-  rotation_weight = 4.0,
-  ceres_solver_options = {
-    max_num_iterations = 12,
-  },
-}
+-- Override only the fields you need; keep defaults for the rest.
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight = 5.0
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.rotation_weight = 4.0
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.only_optimize_yaw = false
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.ceres_solver_options.use_nonmonotonic_steps = true
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.ceres_solver_options.max_num_iterations = 12
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.ceres_solver_options.num_threads = 1
 
 TRAJECTORY_BUILDER_3D.submaps = {
   high_resolution = 0.10,
@@ -100,7 +98,6 @@ TRAJECTORY_BUILDER_3D.submaps = {
   num_range_data = 160,
 }
 
--- IMU is required in 3D
 TRAJECTORY_BUILDER_3D.imu_gravity_time_constant = 10.0
 
 TRAJECTORY_BUILDER_3D.motion_filter = {
