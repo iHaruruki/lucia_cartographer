@@ -25,9 +25,9 @@ def generate_launch_description():
     )
 
     # Topics (adjust defaults to your setup)
-    points_topic = LaunchConfiguration('points_topic', default='/points')
-    imu_topic = LaunchConfiguration('imu_topic', default='/imu/data')
-    odom_topic = LaunchConfiguration('odom_topic', default='/odom')
+    points_topic = LaunchConfiguration('points_topic', default='/unilidar/cloud')
+    imu_topic = LaunchConfiguration('imu_topic', default='/unilidar/imu')
+    odom_topic = LaunchConfiguration('odom_topic', default='/Odometry')
 
     # Occupancy grid params
     resolution = LaunchConfiguration('resolution', default='0.05')
