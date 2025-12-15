@@ -43,6 +43,11 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ros2 run nav2_map_server map_saver_cli -f ~/map
 ```
 
+### Check map
+```bash
+eog ~/map.pgm
+```
+
 ## 🧯 Troubleshooting
 | Symptom | Likely Cause | Fix |
 | ------- | ------------ | --- |
