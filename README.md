@@ -15,7 +15,7 @@ sudo apt install ros-$ROS_DISTRO-cartographer-ros
 cd ~/ros2_ws/src  #Go to ros workspace
 git clone https://github.com/iHaruruki/lucia_cartographer.git #clone this package
 cd ~/ros2_ws
-colcon build --symlink-install
+colcon build --symlink-install --packages-select lucia_cartographer
 source install/setup.bash
 ```
 > [!NOTE]
