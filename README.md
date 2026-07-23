@@ -7,8 +7,7 @@ Launch files and minimal configuration for running Cartographer on the Lucia.
 ## 🛠️ Setup
 ### Install cartographer
 ```bash
-sudo apt install ros-$ROS_DISTRO-cartographer
-sudo apt install ros-$ROS_DISTRO-cartographer-ros
+sudo apt install ros-$ROS_DISTRO-cartographer ros-$ROS_DISTRO-cartographer-ros ros-$ROS_DISTRO-cartographer-rviz
 ```
 ### Clone & Build
 ```bash
