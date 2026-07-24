@@ -28,7 +28,7 @@ ros2 launch lucia_controller bringup.launch.py
 ```
 ### Run Cartographer Node
 ```shell
-ros2 launch lucia_cartographer cartgrapher.launch.py
+ros2 launch lucia_cartographer cartographer.launch.py
 ```
 ### Run Teleportation Node
 ```shell
