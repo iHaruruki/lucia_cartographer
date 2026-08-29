@@ -39,7 +39,7 @@ MAP_BUILDER.use_trajectory_builder_2d = true
 MAP_BUILDER.use_trajectory_builder_3d = false
 MAP_BUILDER.num_background_threads = 8
 
--- ループ閉じ検出を強める
+-- ループ閉じ
 POSE_GRAPH.optimize_every_n_nodes = 90
 POSE_GRAPH.constraint_builder.sampling_ratio = 0.9
 POSE_GRAPH.constraint_builder.max_constraint_distance = 25.0
@@ -52,11 +52,9 @@ POSE_GRAPH.constraint_builder.loop_closure_translation_weight = 1.1e4
 POSE_GRAPH.constraint_builder.loop_closure_rotation_weight = 1e5
 POSE_GRAPH.constraint_builder.log_matches = true
 
--- マッチャの重み
 POSE_GRAPH.matcher_translation_weight = 5e2
 POSE_GRAPH.matcher_rotation_weight = 1.6e3
 
--- Odometry あり想定。強すぎるとループ効果が出ないため 1e2 から
 POSE_GRAPH.optimization_problem.local_slam_pose_translation_weight = 1e2
 POSE_GRAPH.optimization_problem.local_slam_pose_rotation_weight   = 1e2
 POSE_GRAPH.optimization_problem.odometry_translation_weight       = 1e2
